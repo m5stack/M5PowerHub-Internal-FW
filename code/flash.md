@@ -1,32 +1,25 @@
-# 存储结构说明
-
-## 1. FLASH 结构
-| 起始地址   | 结束地址   | 区域名称 | 大小  | 功能说明                             |
-| ---------- | ---------- | -------- | ----- | ------------------------------------ |
-| 0x08000000 | 0x080017FF | Boot     | 6 KB  | 存放启动程序及固件升级逻辑           |
-| 0x08001800 | 0x0800F7FF | App      | 56 KB | 用户应用程序存储区                   |
-| 0x0800F800 | 0x0800F9FF | Data     | 1 KB  | 存储系统参数                         |
-
+# Storage Structure Description
+## 1. FLASH Structure
+| Start Address | End Address | Region Name | Size | Function Description |
+| -------------- | ------------ | ------------ | ----- | -------------------- |
+| 0x08000000 | 0x080017FF | Boot | 6 KB | Stores the bootloader and firmware upgrade logic |
+| 0x08001800 | 0x0800F7FF | App | 56 KB | Storage area for the user application program |
+| 0x0800F800 | 0x0800F9FF | Data | 1 KB | Stores system parameters |
 ---
-
-## 2. RAM 结构
-> 说明：Boot 与 App 共用相同的 RAM 区域，在不同运行阶段占用相应空间。  
-
-| 起始地址   | 结束地址   | 区域名称 | 大小  | 功能说明                             |
-| ---------- | ---------- | -------- | ----- | ------------------------------------ |
-| 0x20000000 | 0x20001FFF | Boot     | 8 KB  | 启动阶段使用，用于缓冲区及变量存储   |
-| 0x20000000 | 0x20001FFF | App      | 8 KB  | 应用程序运行时使用，用于任务栈、变量和缓存 |
-
+## 2. RAM Structure
+> Note: Boot and App share the same RAM area and occupy their corresponding spaces during different runtime stages.  
+| Start Address | End Address | Region Name | Size | Function Description |
+| -------------- | ------------ | ------------ | ----- | -------------------- |
+| 0x20000000 | 0x20001FFF | Boot | 8 KB | Used during the boot stage for buffering and variable storage |
+| 0x20000000 | 0x20001FFF | App | 8 KB | Used during application runtime for task stacks, variables, and caching |
 ---
-
-## 3. 详细说明
-
-- **Boot 区（6 KB）**  
-  用于存放启动程序及固件升级控制逻辑。最后一个字节存储固件版本号，用于版本管理及升级判断。  
-
-- **App 区（56 KB）**  
-  用于存放用户应用程序。末尾预留 4 字节保存 CRC 校验值，启动程序在加载前会进行校验。  
-  校验方式采用 **标准 CRC‑32 算法**（IEEE 802.3，多项式 `0x04C11DB7`，初始值 `0xFFFFFFFF`，输入/输出均反射，结果按位取反，并以小端字节序保存）。  
-
-- **保留区（1 KB）**  
-  用于存储系统参数。
+## 3. Detailed Description
+- **Boot Area (6 KB)**  
+  Used to store the bootloader and firmware upgrade control logic.  
+  The last byte stores the firmware version number for version management and upgrade validation.  
+- **App Area (56 KB)**  
+  Used to store the user application program.  
+  The last 4 bytes are reserved for CRC checksum storage. The bootloader verifies the program before loading.  
+  The verification uses the **standard CRC‑32 algorithm** (IEEE 802.3, polynomial `0x04C11DB7`, initial value `0xFFFFFFFF`, input/output reflected, result bitwise inverted, and stored in little‑endian byte order).  
+- **Reserved Area (1 KB)**  
+  Used to store system parameters.
