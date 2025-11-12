@@ -7,7 +7,9 @@
 | 0x0800F800 | 0x0800F9FF | Data | 1 KB | Stores system parameters |
 ---
 ## 2. RAM Structure
-> Note: Boot and App share the same RAM area and occupy their corresponding spaces during different runtime stages.  
+
+**Note:** Boot and App share the same RAM area and occupy their corresponding spaces during different runtime stages.
+
 | Start Address | End Address | Region Name | Size | Function Description |
 | -------------- | ------------ | ------------ | ----- | -------------------- |
 | 0x20000000 | 0x20001FFF | Boot | 8 KB | Used during the boot stage for buffering and variable storage |
